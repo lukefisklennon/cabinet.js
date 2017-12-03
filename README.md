@@ -61,6 +61,15 @@ cellar.newSite
 
 A `boolean` specifying whether or not the user is new to this page. This property is set to `true` for every page the user visits.
 
+# To do
+
+- Consolidate `pages` and `variables` lists
+- Add attribution for `watch` and `unwatch` pollyfills
+- Remove `newDomain` and `newSite`
+- Browser compatibility table
+- Node support
+- Thorough testing
+
 # License
 
 MIT License
