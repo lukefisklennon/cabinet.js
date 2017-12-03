@@ -2,10 +2,12 @@
 
 Cellar is a library which automatically keeps variables synced to storage in the browser. You don't need to call any functions, global variables which you choose to sync are instantly saved to storage — without you having to do a thing.
 
-    counter = 0; // Initial value
-    vault.sync("counter"); // Syncs to storage
-    counter++; // Variable is automatically saved
-    alert(counter + " visits"); // Displays counter
+```JavaScript
+counter = 0; // Initial value
+vault.sync("counter"); // Syncs to storage
+counter++; // Variable is automatically saved
+alert(counter + " visits"); // Displays counter
+```
 
 In this example, each time you reload the page, the counter will increment.
 
@@ -20,7 +22,9 @@ In this example, each time you reload the page, the counter will increment.
 ## Documentation
 ### sync()
 
-    cellar.sync(var1[, var2[, ...[, global]]])
+```JavaScript
+cellar.sync(var1[, var2[, ...[, global]]])
+```
 
  - `var1, var2, ...`
    Strings naming the variables to sync. These variables must be **global variables**, so they should be accessible from the `window` object. You can define these variables as normal, just leave off the `var` at the beginning. These variables will be automatically synced with `localStorage`, so you can simply modify these variables and they will be saved.
@@ -29,20 +33,26 @@ In this example, each time you reload the page, the counter will increment.
 
 ### wipe()
 
-    cellar.wipe()
+```JavaScript
+cellar.wipe()
+```
 
 Wipes cellar's data in `localStorage`, resetting everything across the entire site.
 **NOTE** This currently only works globally; the ability to wipe the local page will be added soon.
 
 ### newDomain
 
-    cellar.newDomain
+```JavaScript
+cellar.newDomain
+```
 
 A `boolean` specifying whether or not the user is new to this site. If the user visits another page within the site, this property will remain `false`.
 
 ### newSite
 
-    cellar.newSite
+```JavaScript
+cellar.newSite
+```
 
 A `boolean` specifying whether or not the user is new to this page. This property is set to `true` for every page the user visits.
 
