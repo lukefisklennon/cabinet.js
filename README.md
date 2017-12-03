@@ -27,8 +27,10 @@ cellar.sync(var1[, var2[, ...[, global]]])
 ```
 
  - `var1, var2, ...`
+
    Strings naming the variables to sync. These variables must be **global variables**, so they should be accessible from the `window` object. You can define these variables as normal, just leave off the `var` at the beginning. These variables will be automatically synced with `localStorage`, so you can simply modify these variables and they will be saved.
  - `global`
+
    If `true`, the variables will be synced globally — across all pages on the site. Otherwise, these variables will only be stored within this page, and other pages can have their own variables of the same name which won't affect these ones. The default is `false`.
 
 ### wipe()
@@ -38,6 +40,7 @@ cellar.wipe()
 ```
 
 Wipes cellar's data in `localStorage`, resetting everything across the entire site.
+
 **NOTE** This currently only works globally; the ability to wipe the local page will be added soon.
 
 ### newDomain
