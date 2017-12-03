@@ -10,7 +10,7 @@ Object.defineProperty (Object.prototype, "watch", {
 		},
 		setter = function (val) {
 			oldval = newval;
-			return newval = handler.call(this, prop, oldval, val);
+			return newval = handler.call (this, prop, oldval, val);
 		};
 		if (delete this[prop]) {
 			Object.defineProperty (this, prop, {
@@ -34,34 +34,60 @@ Object.defineProperty (Object.prototype, "unwatch", {
 	}
 });
 
-var vault = {
+var _node = (typeof module !== "undefined" && module.exports);
+
+if (_node) {
+	var path = require ("path");
+	var LocalStorage = require ("node-localstorage").LocalStorage;
+	localStorage = new LocalStorage (path.join (path.dirname (module.parent.filename), "cabinet"));
+}
+
+cabinet = {
 	_load: function () {
-		if (localStorage.vault) {
-			var o = JSON.parse (localStorage.vault);
+		if (_node) {
+			this.node = {new: true}
+		} else {
+			this.site = {new: true};
+			this.page = {new: true};
+		}
+		var storage = localStorage.getItem ("cabinet");
+		if (storage != null) {
+			var o = JSON.parse (storage);
 			this._variables = o.variables;
 			this._globals = o.globals;
 			this._pages = o.pages;
-			this.newDomain = false;
+			if (_node) {
+				this.node.new = false;
+			} else {
+				this.site.new = false;
+			}
 		} else {
-			localStorage.vault = JSON.stringify ({pages: [], variables: {}});
+			this._save ();
 		}
-		this._path = window.location.pathname;
+		if (_node) {
+			this._path = "/";
+		} else {
+			this._path = window.location.pathname;
+		}
 		if (this._pages.indexOf (this._path) < 0) {
 			this._pages.push (this._path);
 			this._variables[this._path] = {};
 		} else {
-			this.newPage = false;
+			if (!_node) {
+				this.page.new = false;
+			}
 		}
 	},
 	_save: function () {
-		localStorage.vault = JSON.stringify ({pages: this._pages, variables: this._variables, globals: this._globals});
+		localStorage.setItem ("cabinet", JSON.stringify ({pages: this._pages, variables: this._variables, globals: this._globals}));
 	},
 	_variables: {},
 	_globals: {},
 	_pages: [],
 	_path: "/",
-	newDomain: true,
-	newPage: true,
+	site: null,
+	page: null,
+	node: null,
 	sync: function () {
 		var o = null;
 		if (arguments[arguments.length - 1] == true) {
@@ -70,16 +96,22 @@ var vault = {
 			o = this._variables[this._path];
 		}
 		for (var i = 0; i < arguments.length; i++) {
-			n = arguments[i];
+			var n = arguments[i];
 			if (n) {
-				if (o[n] != undefined) {
-					window[n] = o[n];
+				var g;
+				if (_node) {
+					g = global;
 				} else {
-					o[n] = window[n];
+					g = window;
+				}
+				if (o[n] != undefined) {
+					g[n] = o[n];
+				} else {
+					o[n] = g[n];
 				};
 			};
 			this._save();
-			window.watch (n, function (o, n, v1, v2) {
+			g.watch (n, function (o, n, v1, v2) {
 				if (n in o) {
 					o[n] = v2;
 					this._save();
@@ -91,10 +123,13 @@ var vault = {
 	wipe: function () {
 		this._variables = {};
 		this._globals = {};
-		this.newDomain = true;
-		this.newPage = true;
-		delete localStorage.vault;
+		this.site.new = true;
+		this.page.new = true;
+		localStorage.removeItem ("cabinet");
 	}
 };
 
-vault._load();
+cabinet._load();
+if (_node) {
+	module.exports = cabinet;
+}

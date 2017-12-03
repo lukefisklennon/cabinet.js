@@ -1,0 +1,19 @@
+{
+  "name": "cabinet.js",
+  "version": "0.0.0",
+  "description": "Automatically keeps variables synced to storage in the browser or Node.js",
+  "main": "cabinet.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iONinja/cellar.git"
+  },
+  "author": "iO Ninja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iONinja/cellar/issues"
+  },
+  "homepage": "https://ioninja.github.io/cabinet.js",
+  "dependencies": {
+    "node-localstorage": "^1.3.0"
+  }
+}

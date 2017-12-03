@@ -1,14 +1,14 @@
 <html>
 	<head>
-		<title>Cellar.js example: hello</title>
-		<script src="../cellar.js"></script>
+		<title>Cabinet.js example: hello</title>
+		<script src="../cabinet.js"></script>
 		<meta charset="utf-8">
 	</head>
 	<body>
 		<script>
 			name = ""; // The name is an empty string by default
-			vault.sync ("name"); // Syncing the name variable
-			if (vault.newPage) { // Ask for name if it's their first time here
+			cabinet.sync ("name"); // Syncing the name variable
+			if (cabinet.page.new) { // Ask for name if it's their first time here
 				name = prompt ("What's your name?"); // Create prompt asking for name
 				alert ("Refresh the page...");
 			} else {
