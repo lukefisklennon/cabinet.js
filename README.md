@@ -1,4 +1,4 @@
-# Cellar.js
+# :wine_glass: Cellar.js *beta*
 
 Cellar is a library which automatically keeps variables synced to storage in the browser. You don't need to call any functions, global variables which you choose to sync are instantly saved to storage — without you having to do a thing.
 
@@ -10,6 +10,8 @@ alert(counter + " visits"); // Displays counter
 ```
 
 In this example, each time you reload the page, the counter will increment.
+
+**NOTE** Cellar is in beta, so many features may be unstable. But, you can help by contributing! Feel free to open an issue or pull request.
 
 ## Features
 
