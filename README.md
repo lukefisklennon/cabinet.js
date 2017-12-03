@@ -1,4 +1,4 @@
-Cabinet.js
+# Cabinet.js
 
 Cabinet is a library which automatically keeps variables synced to storage in the browser or Node.js. You don't need to call any functions; global variables which you choose to sync are instantly saved to storage — without you having to do a thing.
 
