@@ -22,7 +22,40 @@ In this example, each time you reload the page, the counter will increment.
  - Detect if the user is visiting for the first time
  - Sync variables within the page or the whole site
 
+## Installing
+
+### Browser
+
+Download `cabinet.min.js` via GitHub, and place it in your project directory. In your HTML file, add a link to the script in the `<head>` section:
+
+```HTML
+<script src="cabinet.min.js"></script>
+```
+
+Be sure to insert this script before your own scripts, otherwise `cabinet` will not be defined until after they execute.
+
+The `cabinet` variable is global, so you can use it in any script. There is no set-up required within your own code.
+
+### Node.js
+
+Run this command in a terminal:
+
+```
+npm install cabinet.js
+```
+
+Add appropriate options such as `--save` where necessary.
+
+In your code, import as follows:
+
+```JavaScript
+var cabinet = require("cabinet.js");
+
+// Your code here
+```
+
 ## Documentation
+
 ### sync()
 
 ```JavaScript
