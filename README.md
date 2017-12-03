@@ -1,23 +1,24 @@
-# :wine_glass: Cellar.js *beta*
+Cabinet.js
 
-Cellar is a library which automatically keeps variables synced to storage in the browser. You don't need to call any functions, global variables which you choose to sync are instantly saved to storage — without you having to do a thing.
+Cabinet is a library which automatically keeps variables synced to storage in the browser or Node.js. You don't need to call any functions; global variables which you choose to sync are instantly saved to storage — without you having to do a thing.
 
 ```JavaScript
 counter = 0; // Initial value
-vault.sync("counter"); // Syncs to storage
+cabinet.sync("counter"); // Syncs to storage
 counter++; // Variable is automatically saved
 alert(counter + " visits"); // Displays counter
 ```
 
 In this example, each time you reload the page, the counter will increment.
 
-**NOTE** Cellar is in beta, so many features may be unstable. But, you can help by contributing! Feel free to open an issue or pull request.
+**NOTE** Cabinet is in beta, so many features may be unstable. But, you can help by contributing! Feel free to open an issue or pull request.
 
 ## Features
 
- - Automatically saves variable
+ - Automatically saves variables
  - Easily specify a default value
  - Requires little additional code
+ - Available for the browser and Node.js
  - Detect if the user is visiting for the first time
  - Sync variables within the page or the whole site
 
@@ -25,7 +26,7 @@ In this example, each time you reload the page, the counter will increment.
 ### sync()
 
 ```JavaScript
-cellar.sync(var1[, var2[, ...[, global]]])
+cabinet.sync(var1[, var2[, ...[, global]]])
 ```
 
  - `var1, var2, ...`
@@ -38,36 +39,42 @@ cellar.sync(var1[, var2[, ...[, global]]])
 ### wipe()
 
 ```JavaScript
-cellar.wipe()
+cabinet.wipe()
 ```
 
-Wipes cellar's data in `localStorage`, resetting everything across the entire site.
+Wipes cabinet's data in `localStorage`, resetting everything across the entire site.
 
 **NOTE** This currently only works globally; the ability to wipe the local page will be added soon.
 
-### newDomain
+### site.new
 
 ```JavaScript
-cellar.newDomain
+cabinet.site.new
 ```
 
-A `boolean` specifying whether or not the user is new to this site. If the user visits another page within the site, this property will remain `false`.
+A `boolean` specifying whether or not the user is new to this site. If the user visits another page within the site, this property will remain `false`. Only available in the browser.
 
-### newSite
+### page.new
 
 ```JavaScript
-cellar.newSite
+cabinet.page.new
 ```
 
-A `boolean` specifying whether or not the user is new to this page. This property is set to `true` for every page the user visits.
+A `boolean` specifying whether or not the user is new to this page. This property is set to `true` for every page the user visits. Only available in the browser.
+
+### node.new
+
+```JavaScript
+cabinet.node.new
+```
+
+A `boolean` specifying whether or not the Node.js server is running for the first time. Only available in Node.js.
 
 # To do
 
 - Consolidate `pages` and `variables` lists
 - Add attribution for `watch` and `unwatch` pollyfills
-- Remove `newDomain` and `newSite`
 - Browser compatibility table
-- Node support
 - Thorough testing
 
 # License
