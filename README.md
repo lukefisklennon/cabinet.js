@@ -103,10 +103,10 @@ cabinet.page.new
 
 A `boolean` specifying whether or not the user is new to this page. This property is set to `true` for every page the user visits. Only available in the browser.
 
-### node.new
+### new
 
 ```JavaScript
-cabinet.node.new
+cabinet.new
 ```
 
 A `boolean` specifying whether or not the Node.js server is running for the first time. Only available in Node.js.
