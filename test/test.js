@@ -1,6 +1,6 @@
 var cabinet = require ("../cabinet.js");
 
-counta = 0;
-cabinet.sync("counta");
-counta++;
-console.log (counta);
+counter = 0;
+cabinet.sync("counter");
+counter++;
+console.log (counter); // Should increment every time you run the script

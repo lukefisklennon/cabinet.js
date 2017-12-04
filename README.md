@@ -19,6 +19,8 @@ In this example, each time you reload the page, the counter will increment.
  - Easily specify a default value
  - Requires little additional code
  - Available for the browser and Node.js
+
+Additional features for the browser:
  - Detect if the user is visiting for the first time
  - Sync variables within the page or the whole site
 
@@ -32,9 +34,15 @@ Download `cabinet.min.js` via GitHub, and place it in your project directory. In
 <script src="cabinet.min.js"></script>
 ```
 
-Be sure to insert this script before your own scripts, otherwise `cabinet` will not be defined until after they execute.
-
 The `cabinet` variable is global, so you can use it in any script. There is no set-up required within your own code.
+
+You can also link to the script hosted on GitHub:
+
+```HTML
+<script src="https://rawgit.com/iONinja/cabinet.js/master/cabinet.min.js"></script>
+```
+
+**NOTE** GitHub and RawGit cannot guarantee reliability and speed for a project in production. It is generally better to download and host the file yourself.
 
 ### Node.js
 
@@ -43,8 +51,6 @@ Run this command in a terminal:
 ```
 npm install cabinet.js
 ```
-
-Add appropriate options such as `--save` where necessary.
 
 In your code, import as follows:
 
@@ -64,20 +70,22 @@ cabinet.sync(var1[, var2[, ...[, global]]])
 
  - `var1, var2, ...`
 
-   Strings naming the variables to sync. These variables must be **global variables**, so they should be accessible from the `window` object. You can define these variables as normal, just leave off the `var` at the beginning. These variables will be automatically synced with `localStorage`, so you can simply modify these variables and they will be saved.
+   Strings naming the variables to sync. These variables must be **global variables**, so they should be accessible from the `window` object (in the browser) or the `global` object (in Node.js). You can define these variables as you normally do; just leave off the `var` at the beginning. These variables will be automatically synced with `localStorage` (or written to the disk in Node.js), so you can simply modify these variables and they will be saved.
  - `global`
 
-   If `true`, the variables will be synced globally — across all pages on the site. Otherwise, these variables will only be stored within this page, and other pages can have their own variables of the same name which won't affect these ones. The default is `false`.
+   This option is only available for the browser. If `true`, the variables will be synced globally — across all pages on the site. Otherwise, these variables will only be stored within this page, and other pages can have their own variables of the same name which won't affect these ones. The default is `false`.
 
 ### wipe()
 
 ```JavaScript
-cabinet.wipe()
+cabinet.wipe(global)
 ```
 
-Wipes cabinet's data in `localStorage`, resetting everything across the entire site.
+In Node.js, this method deletes all of cabinet's storage for this script.
 
-**NOTE** This currently only works globally; the ability to wipe the local page will be added soon.
+ - `global`
+
+   This option is only available for the browser. If `true`, all of cabinet's data in `localStorage` is deleted for the entire site. Otherwise, only data for this page is wiped. The default is `false`.
 
 ### site.new
 
@@ -102,13 +110,6 @@ cabinet.node.new
 ```
 
 A `boolean` specifying whether or not the Node.js server is running for the first time. Only available in Node.js.
-
-# To do
-
-- Consolidate `pages` and `variables` lists
-- Add attribution for `watch` and `unwatch` pollyfills
-- Browser compatibility table
-- Thorough testing
 
 # License
 

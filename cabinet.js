@@ -1,3 +1,25 @@
+/*
+ * Cabinet.js
+ * Automatically keeps variables synced to storage in the browser or Node.js
+ *
+ * v0.0.2
+ * 4 December, 2017
+ *
+ * By iO Ninja
+ * MIT license
+ * See README.md for more information
+ */
+
+/*
+ * object.watch polyfill
+ *
+ * 2012-04-03
+ *
+ * By Eli Grey, http://eligrey.com
+ * Public Domain.
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ */
+
 Object.defineProperty (Object.prototype, "watch", {
 	enumerable: false,
 	configurable: true,
@@ -39,7 +61,7 @@ var _node = (typeof module !== "undefined" && module.exports);
 if (_node) {
 	var path = require ("path");
 	var LocalStorage = require ("node-localstorage").LocalStorage;
-	localStorage = new LocalStorage (path.join (path.dirname (module.parent.filename), "cabinet"));
+	localStorage = new LocalStorage (path.join (path.dirname (module.parent.filename), "localStorage-" + module.parent.filename));
 }
 
 cabinet = {
@@ -53,47 +75,40 @@ cabinet = {
 		var storage = localStorage.getItem ("cabinet");
 		if (storage != null) {
 			var o = JSON.parse (storage);
-			this._variables = o.variables;
-			this._globals = o.globals;
 			this._pages = o.pages;
+			this._globals = o.globals;
 			if (_node) {
-				this.node.new = false;
+				this.new = false;
 			} else {
 				this.site.new = false;
 			}
 		} else {
 			this._save ();
 		}
-		if (_node) {
-			this._path = "/";
-		} else {
+		if (!_node) {
 			this._path = window.location.pathname;
-		}
-		if (this._pages.indexOf (this._path) < 0) {
-			this._pages.push (this._path);
-			this._variables[this._path] = {};
-		} else {
-			if (!_node) {
+			if (!(this._path in this._pages)) {
+				this._pages[this._path] = {};
+			} else {
 				this.page.new = false;
 			}
 		}
 	},
 	_save: function () {
-		localStorage.setItem ("cabinet", JSON.stringify ({pages: this._pages, variables: this._variables, globals: this._globals}));
+		localStorage.setItem ("cabinet", JSON.stringify ({pages: this._pages, globals: this._globals}));
 	},
-	_variables: {},
+	_pages: {},
 	_globals: {},
-	_pages: [],
 	_path: "/",
 	site: null,
 	page: null,
 	node: null,
 	sync: function () {
 		var o = null;
-		if (arguments[arguments.length - 1] == true) {
+		if (_node || arguments[arguments.length - 1] == true) {
 			o = this._globals;
 		} else {
-			o = this._variables[this._path];
+			o = this._pages[this._path];
 		}
 		for (var i = 0; i < arguments.length; i++) {
 			var n = arguments[i];
@@ -120,12 +135,17 @@ cabinet = {
 			}.bind (this, o));
 		}
 	},
-	wipe: function () {
-		this._variables = {};
-		this._globals = {};
-		this.site.new = true;
-		this.page.new = true;
-		localStorage.removeItem ("cabinet");
+	wipe: function (g) {
+		if (_node || g == true) {
+			this._pages = {};
+			this._globals = {};
+			this.site.new = true;
+			this.page.new = true;
+			localStorage.removeItem ("cabinet");
+		} else {
+			delete this._pages[this._path];
+			this._save ();
+		}
 	}
 };
 
