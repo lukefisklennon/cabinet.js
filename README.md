@@ -36,6 +36,8 @@ Download `cabinet.min.js` via GitHub, and place it in your project directory. In
 
 The `cabinet` variable is global, so you can use it in any script. There is no set-up required within your own code.
 
+**NOTE** You must link the script before any of your own code; otherwise, `cabinet` will be `undefined` for those scripts.
+
 You can also link to the script hosted on GitHub:
 
 ```HTML
