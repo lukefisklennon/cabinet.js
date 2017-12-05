@@ -2,7 +2,7 @@
  * Cabinet.js
  * Automatically keeps variables synced to storage in the browser or Node.js
  *
- * v0.0.2
+ * v0.0.5
  * 4 December, 2017
  *
  * By iO Ninja

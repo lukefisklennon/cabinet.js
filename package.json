@@ -1,6 +1,6 @@
 {
   "name": "cabinet.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Automatically keeps variables synced to storage in the browser or Node.js",
   "main": "cabinet.js",
   "repository": {
